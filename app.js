@@ -211,7 +211,6 @@
                     const amount = Number(button.dataset.amount);
                     const currentValue = Number($("tenderedInput").value) || 0;
                     $("tenderedInput").value = currentValue + amount;
-                    $("tenderedInput").focus();
                 });
             });
 
@@ -229,7 +228,6 @@
             lines.append(row);
         }
         showDialog("checkoutDialog");
-        setTimeout(() => $("tenderedInput").focus(), 80);
     }
 
     function commitPayment() {

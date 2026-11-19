@@ -203,17 +203,6 @@
         $("tenderedInput").value = "";
         $("modalTotal").textContent = yen(cartTotal());
 
-        // unitButtonsの中身のボタンにdata-amountに応じた値を加算するイベントリスナーを追加
-        $("unitButtons")
-            .querySelectorAll("button")
-            .forEach((button) => {
-                button.addEventListener("click", () => {
-                    const amount = Number(button.dataset.amount);
-                    const currentValue = Number($("tenderedInput").value) || 0;
-                    $("tenderedInput").value = currentValue + amount;
-                });
-            });
-
         const lines = $("checkoutLines");
         lines.innerHTML = "";
         for (const [id, quantity] of cart.entries()) {
@@ -221,7 +210,7 @@
             const row = document.createElement("div");
             row.className = "checkout-line";
             const label = document.createElement("span");
-            label.textContent = product.name + " × " + quantity + "（" + yen(product.price) + "）";
+            label.textContent = product.name + " x " + quantity + "（" + yen(product.price) + "）";
             const amount = document.createElement("strong");
             amount.textContent = yen(product.price * quantity);
             row.append(label, amount);
@@ -352,7 +341,7 @@
             const name = document.createElement("strong");
             name.textContent = item.name;
             const meta = document.createElement("small");
-            meta.textContent = yen(item.unitPrice) + " × " + item.quantity;
+            meta.textContent = yen(item.unitPrice) + " x " + item.quantity;
             left.append(name, meta);
             const right = document.createElement("strong");
             right.textContent = yen(item.subtotal);
@@ -611,6 +600,15 @@
         $("checkoutOpen").addEventListener("click", openCheckout);
         $("payNow").addEventListener("click", commitPayment);
         $("finishCheckout").addEventListener("click", finishCheckout);
+        $("unitButtons")
+            .querySelectorAll("button")
+            .forEach((button) => {
+                button.addEventListener("click", () => {
+                    const amount = Number(button.dataset.amount);
+                    const currentValue = Number($("tenderedInput").value) || 0;
+                    $("tenderedInput").value = currentValue + amount;
+                });
+            });
         $("exportCsv").addEventListener("click", exportCSV);
         $("addProductOpen").addEventListener("click", () => openProductEditor());
         $("productForm").addEventListener("submit", saveProduct);

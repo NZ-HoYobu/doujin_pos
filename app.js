@@ -166,7 +166,7 @@
             const line = document.createElement("span");
             line.className = "line-total";
             line.textContent = yen(product.price * quantity);
-            controls.append(minus, qty, plus, spacer, line);
+            controls.append(minus, qty, plus, line);
             card.append(name, price, stock, controls);
             grid.append(card);
         }

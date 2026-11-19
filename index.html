@@ -27,7 +27,6 @@
             <section id="page-pos" class="page active">
                 <div class="section-heading">
                     <div>
-                        <p class="eyebrow">CHECKOUT</p>
                         <h2>商品を選択</h2>
                     </div>
                     <div class="summary-chip"><span>商品点数</span><strong id="itemCount">0</strong></div>
@@ -43,14 +42,13 @@
             <section id="page-records" class="page">
                 <div class="section-heading">
                     <div>
-                        <p class="eyebrow">SALES</p>
                         <h2>取引記録</h2>
                     </div>
                     <button id="exportCsv" class="button primary">CSVを出力</button>
                 </div>
                 <div class="record-meta">
                     <span id="recordCount">0件</span>
-                    <span id="csvStatus">CSV未出力</span>
+                    <span id="csvStatus"></span>
                 </div>
                 <div class="table-wrap">
                     <table>
@@ -73,32 +71,28 @@
             <section id="page-settings" class="page">
                 <div class="section-heading">
                     <div>
-                        <p class="eyebrow">CONFIG</p>
                         <h2>設定</h2>
                     </div>
                 </div>
                 <div class="panel">
-                    <h3>ブース設定</h3>
+                    <h3>ブース名設定</h3>
                     <form id="boothForm" class="inline-form">
-                        <label class="field grow">ブース名<input id="boothNameInput" required autocomplete="off" placeholder="ブース名を設定してください" /></label>
+                        <label class="field grow"><input id="boothNameInput" required autocomplete="off" placeholder="ブース名を設定してください" /></label>
                         <button class="button primary" type="submit">保存</button>
                     </form>
                 </div>
                 <div class="panel">
                     <div class="panel-heading">
-                        <div>
-                            <h3>商品リスト</h3>
-                            <p class="muted">ドラッグ不要で上下に並べ替えできます。</p>
-                        </div>
+                        <h3>商品リスト</h3>
                         <button id="addProductOpen" class="button primary">商品を追加</button>
                     </div>
                     <div id="settingsProducts" class="settings-products"></div>
                     <div id="emptySettingsProducts" class="empty-state hidden">商品はまだありません。</div>
                 </div>
                 <div class="panel">
-                    <h3>売上データのリセット</h3>
-                    <p class="muted">売上記録を削除します。商品設定とブース名は保持されます。在庫数は削除されず、CSV出力だけでは復元できません。</p>
-                    <div class="reset-status-row"><span>最新CSVの状態</span><strong id="resetCsvStatus">未出力</strong></div>
+                    <h3>リセット</h3>
+                    <p class="muted">売上記録を削除します。商品設定とブース名は保持されます。</p>
+                    <div class="reset-status-row"><span>最新データ</span><strong id="resetCsvStatus"></strong></div>
                     <button id="resetOpen" class="button danger">売上記録をリセット</button>
                 </div>
                 <p class="footnote">データは閲覧履歴の削除などで失われます。定期的にCSVを保存してください。</p>
@@ -108,7 +102,6 @@
         <dialog id="checkoutDialog" class="modal">
             <div class="modal-head">
                 <div>
-                    <p class="eyebrow">PAYMENT</p>
                     <h2 id="checkoutTitle">会計確認</h2>
                 </div>
                 <button class="icon-button" data-close="checkoutDialog" aria-label="閉じる">×</button>
@@ -117,6 +110,12 @@
                 <div id="checkoutLines" class="checkout-lines"></div>
                 <div class="amount-card"><span>合計金額</span><strong id="modalTotal">¥0</strong></div>
                 <label class="field">預り金額を入力<input id="tenderedInput" type="number" inputmode="numeric" min="0" step="1" placeholder="預り金額を入力" /></label>
+                <div class="unitButtonContainer" id="unitButtons">
+                    <button class="small-button" data-amount="1000">+1000</button>
+                    <button class="small-button" data-amount="500">+500</button>
+                    <button class="small-button" data-amount="100">+100</button>
+                    <button class="small-button" data-amount="50">+50</button>
+                </div>
                 <p id="paymentError" class="error-text" role="alert"></p>
                 <button id="payNow" class="button primary full large">会計する</button>
             </div>
@@ -134,7 +133,6 @@
         <dialog id="transactionDialog" class="modal">
             <div class="modal-head">
                 <div>
-                    <p class="eyebrow">TRANSACTION DETAIL</p>
                     <h2 id="transactionTitle">取引明細</h2>
                 </div>
                 <button class="icon-button" data-close="transactionDialog" aria-label="閉じる">×</button>
@@ -145,7 +143,6 @@
         <dialog id="productDialog" class="modal">
             <div class="modal-head">
                 <div>
-                    <p class="eyebrow">PRODUCT</p>
                     <h2 id="productDialogTitle">商品を追加</h2>
                 </div>
                 <button class="icon-button" data-close="productDialog" aria-label="閉じる">×</button>
@@ -165,20 +162,14 @@
         <dialog id="resetDialog" class="modal">
             <div class="modal-head">
                 <div>
-                    <p class="eyebrow">DANGER ZONE</p>
                     <h2>売上記録のリセット</h2>
                 </div>
                 <button class="icon-button" data-close="resetDialog" aria-label="閉じる">×</button>
             </div>
-            <div id="resetBlocked" class="hidden">
-                <p class="warning-box">最新の売上記録がCSV出力されていないため、リセットできません。</p>
-                <p class="muted">先に「記録閲覧」画面からCSVを出力し、ファイルが端末に保存されたことを確認してください。</p>
-                <button id="goExport" class="button primary full">記録閲覧へ移動</button>
-            </div>
             <div id="resetConfirm">
                 <p>売上記録 <strong id="resetRecordCount">0件</strong> を削除します。この操作は取り消せません。</p>
-                <p class="warning-box">ブース名・商品リスト・在庫数は保持されます。</p>
-                <label class="check-line"><input id="resetAcknowledge" type="checkbox" /> 売上記録を削除することを理解しました</label>
+                <p class="warning-box">必要なデータは削除前に保存してください。削除されたデータは復元できません。</p>
+                <label class="check-line"><input id="resetAcknowledge" type="checkbox" />削除を続ける</label>
                 <button id="resetConfirmButton" class="button danger full" disabled>売上記録を削除する</button>
             </div>
         </dialog>

@@ -220,11 +220,10 @@
     }
 
     function commitPayment() {
-        const tendered = Number($("tenderedInput").value);
+        let tendered = Number($("tenderedInput").value);
         const total = cartTotal();
         if ($("tenderedInput").value.trim() === "" || !intValue(tendered)) {
-            $("paymentError").textContent = "預り金額は0以上の整数で入力してください。";
-            return;
+            tendered = 0;
         }
         if (tendered < total) {
             $("paymentError").textContent = "預り金額が合計金額に足りません。";

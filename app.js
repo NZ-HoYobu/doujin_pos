@@ -163,8 +163,6 @@
             plus.setAttribute("aria-label", product.name + "を1点増やす");
             plus.disabled = soldout || quantity >= product.stockNow;
             plus.addEventListener("click", () => setQuantity(product.id, quantity + 1));
-            const spacer = document.createElement("span");
-            spacer.className = "qty-spacer";
             const line = document.createElement("span");
             line.className = "line-total";
             line.textContent = yen(product.price * quantity);
@@ -453,7 +451,7 @@
             const name = document.createElement("strong");
             name.textContent = p.name;
             const meta = document.createElement("small");
-            meta.textContent = yen(p.price) + " / 入庫 " + p.stockIn + " / 在庫 " + p.stockNow;
+            meta.innerHTML = yen(p.price) + "<br />入庫 " + p.stockIn + " / 在庫 " + p.stockNow;
             info.append(name, meta);
             const actions = document.createElement("div");
             actions.className = "settings-actions";

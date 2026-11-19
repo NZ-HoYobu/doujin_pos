@@ -160,14 +160,14 @@ h3 {
 .qty-controls {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     margin-top: 12px;
 }
 .qty-button {
     border: 1px solid var(--line);
     background: #f8f9fc;
     border-radius: 10px;
-    width: 42px;
+    width: 38px; /* TODO */
     height: 42px;
     font-size: 1.3rem;
     font-weight: 700;
@@ -179,10 +179,9 @@ h3 {
     font-size: 1.05rem;
     font-weight: 800;
 }
-.qty-spacer {
-    flex: 1;
-}
 .line-total {
+    width: 70px;
+    text-align: right;
     font-weight: 800;
     font-size: 0.9rem;
     white-space: nowrap;
@@ -318,7 +317,7 @@ h3 {
     justify-content: flex-end;
 }
 .small-button {
-    min-width: 38px;
+    min-width: 42px;
     min-height: 38px;
     padding: 6px 9px;
     border: 1px solid var(--line);
@@ -635,6 +634,6 @@ tbody tr:last-child td {
         padding: 10px;
     }
     .settings-actions {
-        max-width: 135px;
+        max-width: 90px;
     }
 }
